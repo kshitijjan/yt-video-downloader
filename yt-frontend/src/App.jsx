@@ -1,49 +1,55 @@
-import { useState } from 'react'
-import axios from 'axios'
+import React, { useState } from 'react';
+import axios from 'axios';
+import './App.css';
 
 function App() {
-  const [url, setUrl] = useState('')
-  const [videoInfo, setVideoInfo] = useState(null)
+  const [url, setUrl] = useState('');
+  const [videoInfo, setVideoInfo] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      console.log(url);
-      
+    try {
       const response = await axios.get('http://localhost:3000/api/video/info', {
-        params: {url}
-      })
-      setVideoInfo(response.data)
-    }catch(err){
-      console.log(err);
-      alert('Failed to fetch video info')
+        params: { url },
+      });
+      setVideoInfo(response.data);
+    } catch (error) {
+      console.error(error);
+      alert('Failed to fetch video info');
     }
-  }
+  };
 
   const handleDownload = () => {
     window.location.href = `http://localhost:3000/api/video/download?url=${encodeURIComponent(url)}`;
-  }
+  };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>YouTube Video Downloader</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="container">
+      <h1 className="header">YouTube Video Downloader</h1>
+      <form onSubmit={handleSubmit} className="form">
         <input
           type="text"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder="Enter YouTube URL"
-          style={{ width: '300px', marginRight: '10px' }}
+          className="input"
         />
-        <button type="submit">Get Info</button>
+        <button type="submit" className="button">
+          Get Info
+        </button>
       </form>
       {videoInfo && (
-        <div style={{ marginTop: '20px' }}>
+        <div className="videoCard">
           <h2>{videoInfo.title}</h2>
           <p>{videoInfo.description}</p>
-          <img src={videoInfo.thumbnail} alt="Thumbnail" style={{ maxWidth: '300px' }} />
+          <img
+            src={videoInfo.thumbnail || 'https://via.placeholder.com/300'}
+            alt="Thumbnail"
+            className="thumbnail"
+            onError={(e) => console.log('Image load error:', e)}
+          />
           <br />
-          <button onClick={handleDownload} style={{ marginTop: '10px' }}>
+          <button onClick={handleDownload} className="downloadButton">
             Download Video
           </button>
         </div>
@@ -52,4 +58,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

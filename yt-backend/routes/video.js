@@ -16,12 +16,13 @@ router.get('/info', async (req, res) => {
         const info = await ytdl.getInfo(url)   //fetching video using ytdl-core
 
         const formats = info.formats.filter(f => f.hasVideo && f.hasAudio);
+
         console.log(formats);
         
         res.status(200).json({
             title: info.videoDetails.title,
             description: info.videoDetails.description,
-            thumbnail: info.videoDetails.thumbnails
+            thumbnail: info.videoDetails.thumbnails[0].url
         });
     }
     catch(err){
