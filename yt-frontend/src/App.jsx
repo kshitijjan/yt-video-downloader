@@ -9,7 +9,7 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get('http://localhost:3000/api/video/info', {
+      const response = await axios.get('https://yt-backend-nine.vercel.app/api/video/info', {
         params: { url },
       });
       setVideoInfo(response.data);
@@ -20,7 +20,7 @@ function App() {
   };
 
   const handleDownload = () => {
-    window.location.href = `http://localhost:3000/api/video/download?url=${encodeURIComponent(url)}`;
+    window.location.href = `https://yt-backend-nine.vercel.app/api/video/download?url=${encodeURIComponent(url)}`;
   };
 
   return (
