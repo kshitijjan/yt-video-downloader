@@ -1,6 +1,6 @@
 const express = require('express')
 const ytdl = require('@distube/ytdl-core');
-const Video = require('../database/db')
+// const Video = require('../database/db')
 
 const router = express.Router();
 
